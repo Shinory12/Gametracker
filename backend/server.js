@@ -1,36 +1,41 @@
 import express from "express";
 import mongoose from "mongoose";
-import dotenv from "dotenv";
 import cors from "cors";
-import juegosRoutes from "./routes/games.js"; // 👈 importa tus rutas
-
-dotenv.config();
 
 const app = express();
-
-// 🟢 CORS: permite conexión desde el frontend
-app.use(
-  cors({
-    origin: "http://localhost:5173",
-    methods: ["GET", "POST", "PUT", "DELETE"],
-    credentials: true,
-  })
-);
-
+app.use(cors());
 app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
 
-// 🟢 Conexión con MongoDB
+// Conectar MongoDB
 mongoose
-  .connect(process.env.MONGO_URI)
-  .then(() => console.log("✅ Conectado a MongoDB"))
-  .catch((err) => console.error("❌ Error al conectar con MongoDB:", err));
+  .connect("mongodb://127.0.0.1:27017/juegosdb")
+  .then(() => console.log("MongoDB conectado"))
+  .catch((err) => console.error(err));
 
-// 🟢 Registrar las rutas
-app.use("/api/juegos", juegosRoutes); // 👈 aquí montas las rutas
+// Modelo
+const JuegoSchema = new mongoose.Schema({
+  nombre: String,
+  genero: String,
+  plataforma: String,
+  anio: Number,
+  imagen: String,
+});
 
-// 🟢 Iniciar servidor
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () =>
-  console.log(`🚀 Servidor escuchando en el puerto ${PORT}`)
-);
+const Juego = mongoose.model("Juego", JuegoSchema);
+
+// Rutas
+app.get("/juegos", async (req, res) => {
+  const juegos = await Juego.find();
+  res.json(juegos);
+});
+
+app.post("/juegos", async (req, res) => {
+  const nuevo = new Juego(req.body);
+  await nuevo.save();
+  res.json(nuevo);
+});
+
+// Iniciar backend
+app.listen(4000, () => {
+  console.log("Servidor backend corriendo en http://localhost:4000");
+});

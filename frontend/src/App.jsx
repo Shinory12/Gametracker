@@ -9,19 +9,30 @@ function App() {
   const [anio, setAnio] = useState("");
   const [imagen, setImagen] = useState("");
 
-  // Cargar juegos desde MongoDB al iniciar
+  // Cargar juegos
+  const cargarJuegos = async () => {
+    try {
+      const res = await fetch("http://localhost:4000/juegos");
+      const data = await res.json();
+      setJuegos(data);
+    } catch (err) {
+      console.error("Error al cargar juegos:", err);
+    }
+  };
+
   useEffect(() => {
-    fetch("http://localhost:4000/juegos")
-      .then(res => res.json())
-      .then(data => setJuegos(data))
-      .catch(err => console.error("Error al cargar juegos:", err));
+    cargarJuegos();
   }, []);
 
-  // Agregar un nuevo juego a MongoDB
+  // Agregar juego
   const agregarJuego = async () => {
-    if (!nombre || !genero) return alert("Por favor completa al menos nombre y género");
-
-    const nuevoJuego = { nombre, genero, plataforma, anio, imagen };
+    const nuevoJuego = {
+      nombre,
+      genero,
+      plataforma,
+      anio,
+      imagen,
+    };
 
     try {
       const res = await fetch("http://localhost:4000/juegos", {
@@ -33,70 +44,59 @@ function App() {
       const data = await res.json();
       setJuegos([...juegos, data]);
 
-      // Limpiar inputs
+      // limpiar
       setNombre("");
       setGenero("");
       setPlataforma("");
       setAnio("");
       setImagen("");
-    } catch (error) {
-      console.error("Error al agregar juego:", error);
+    } catch (err) {
+      console.error("Error al agregar juego:", err);
     }
   };
 
   return (
-    <div className="app">
-      <h1 className="titulo">
-        🎮 Biblioteca de Juegos
-      </h1>
+    <div className="App">
+      <h1>Biblioteca de Juegos</h1>
 
-      <div className="formulario">
-        <input
-          type="text"
-          placeholder="Nombre"
-          value={nombre}
-          onChange={(e) => setNombre(e.target.value)}
-        />
-        <input
-          type="text"
-          placeholder="Género"
-          value={genero}
-          onChange={(e) => setGenero(e.target.value)}
-        />
-        <input
-          type="text"
-          placeholder="Plataforma"
-          value={plataforma}
-          onChange={(e) => setPlataforma(e.target.value)}
-        />
-        <input
-          type="text"
-          placeholder="Año"
-          value={anio}
-          onChange={(e) => setAnio(e.target.value)}
-        />
-        <input
-          type="text"
-          placeholder="URL Imagen"
-          value={imagen}
-          onChange={(e) => setImagen(e.target.value)}
-        />
+      <input
+        placeholder="Nombre"
+        value={nombre}
+        onChange={(e) => setNombre(e.target.value)}
+      />
 
-        <button onClick={agregarJuego}>Agregar juego</button>
-      </div>
+      <input
+        placeholder="Género"
+        value={genero}
+        onChange={(e) => setGenero(e.target.value)}
+      />
 
-      <div className="contenedor-juegos">
-        {juegos.map((juego) => (
-          <div className="tarjeta" key={juego._id}>
-            {juego.imagen ? (
-              <img src={juego.imagen} alt={juego.nombre} />
-            ) : (
-              <div className="sin-imagen">Sin imagen</div>
-            )}
-            <h2>{juego.nombre}</h2>
-            <p>{juego.genero}</p>
-            {juego.plataforma && <p><b>Plataforma:</b> {juego.plataforma}</p>}
-            {juego.anio && <p><b>Año:</b> {juego.anio}</p>}
+      <input
+        placeholder="Plataforma"
+        value={plataforma}
+        onChange={(e) => setPlataforma(e.target.value)}
+      />
+
+      <input
+        placeholder="Año"
+        value={anio}
+        onChange={(e) => setAnio(e.target.value)}
+      />
+
+      <input
+        placeholder="Imagen (base64)"
+        value={imagen}
+        onChange={(e) => setImagen(e.target.value)}
+      />
+
+      <button onClick={agregarJuego}>Agregar juego</button>
+
+      <div style={{ marginTop: "20px" }}>
+        {juegos.map((j) => (
+          <div key={j._id} style={{ marginBottom: "10px" }}>
+            <b>{j.nombre}</b> - {j.genero} - {j.plataforma} - {j.anio}
+            <br />
+            <img src={j.imagen} alt="" width="100" />
           </div>
         ))}
       </div>
