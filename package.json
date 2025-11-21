@@ -1,0 +1,24 @@
+{
+  "name": "gametracker",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "concurrently \"npm start --prefix backend\" \"npm start --prefix frontend\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Shinory12/Gametracker.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Shinory12/Gametracker/issues"
+  },
+  "homepage": "https://github.com/Shinory12/Gametracker#readme",
+  "devDependencies": {
+    "concurrently": "^9.2.1"
+  }
+}
+
