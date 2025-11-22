@@ -1,37 +1,40 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import AddGame from "./AddGame.jsx";
+import ListaJuegos from "./ListaJuegos.jsx";
+import "./App.css";
 
 function App() {
-  const [juegos, setJuegos] = useState([]);
+  const [sidebarAbierto, setSidebarAbierto] = useState(false);
+  const [pagina, setPagina] = useState("inicio");
 
-  const obtenerJuegos = async () => {
-    try {
-      const res = await fetch("http://localhost:4000/juegos");
-      if (!res.ok) throw new Error("Error al obtener juegos");
-      const data = await res.json();
-      setJuegos(data);
-    } catch (error) {
-      console.error("Error al obtener juegos:", error);
-    }
+  const navegar = (p) => {
+    setPagina(p);
+    setSidebarAbierto(false);
   };
 
-  useEffect(() => {
-    obtenerJuegos();
-  }, []);
-
   return (
-    <div>
-      <h1>Mis Juegos</h1>
-      <AddGame onAgregar={obtenerJuegos} />
-      <ul>
-        {juegos.map((juego) => (
-          <li key={juego._id}>
-            <h3>{juego.nombre}</h3>
-            <p>{juego.genero} - {juego.plataforma} - {juego.anio}</p>
-            {juego.imagen && <img src={juego.imagen} alt={juego.nombre} width={100} />}
-          </li>
-        ))}
-      </ul>
+    <div className="app-container">
+      {/* Barra superior */}
+      <header className="top-bar">
+        <button className="hamburger" onClick={() => setSidebarAbierto(!sidebarAbierto)}>
+          ☰
+        </button>
+        <h1 className="titulo">GameTracker</h1>
+      </header>
+
+      {/* Sidebar */}
+      <aside className={`sidebar ${sidebarAbierto ? "abierto" : ""}`}>
+        <button onClick={() => navegar("inicio")} className="side-btn">🏠 Inicio</button>
+        <button onClick={() => navegar("agregar")} className="side-btn">➕ Agregar Juego</button>
+        <button onClick={() => navegar("lista")} className="side-btn">📃 Lista de Juegos</button>
+      </aside>
+
+      {/* Contenido */}
+      <main className="contenido">
+        {pagina === "inicio" && <h2 className="bienvenida">Bienvenido a GameTracker</h2>}
+        {pagina === "agregar" && <AddGame />}
+        {pagina === "lista" && <ListaJuegos />}
+      </main>
     </div>
   );
 }

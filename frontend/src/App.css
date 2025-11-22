@@ -1,112 +1,108 @@
-/* Reset básico */
-body, html, #root {
+/* Fondo general */
+body {
   margin: 0;
-  padding: 0;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background-color: #1e1e2f;
-  color: #eee;
+  background: #0d1b2a;
+  font-family: "Segoe UI", sans-serif;
+  color: #e0e6ed;
 }
 
-/* Barra superior */
-.navbar {
+/* Estructura */
+.app-container {
+  display: flex;
+  height: 100vh;
+  overflow: hidden;
+}
+
+/* Top Bar */
+.top-bar {
+  position: fixed;
+  width: 100%;
+  top: 0;
+  height: 60px;
+  background: #1b263b;
   display: flex;
   align-items: center;
-  background-color: #121226;
-  padding: 10px 20px;
-  position: sticky;
-  top: 0;
+  padding: 0 20px;
+  color: white;
   z-index: 10;
+  box-shadow: 0 2px 5px #0008;
 }
 
-.title {
-  margin-left: 20px;
-  font-size: 1.8rem;
-  color: #00ffff;
-}
-
-.menu-icon {
-  width: 30px;
-  height: 30px;
+.hamburger {
+  background: transparent;
+  border: none;
+  font-size: 28px;
+  color: white;
   cursor: pointer;
+  margin-right: 15px;
 }
 
-/* Sidebar menú */
+.titulo {
+  font-size: 22px;
+}
+
+/* Sidebar */
 .sidebar {
   position: fixed;
-  top: 50px;
+  top: 60px;
+  left: -250px;
+  width: 250px;
+  height: calc(100% - 60px);
+  background: #1e2a3d;
+  padding-top: 20px;
+  transition: 0.3s ease;
+  box-shadow: 3px 0 6px #0006;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.sidebar.abierto {
   left: 0;
-  width: 200px;
-  height: 100%;
-  background-color: #1a1a2e;
-  padding: 20px;
-  box-shadow: 2px 0 5px rgba(0,0,0,0.5);
 }
 
-.sidebar ul {
-  list-style: none;
-  padding: 0;
-}
-
-.sidebar li {
-  padding: 10px 0;
+.side-btn {
+  background: #324a5e;
+  color: white;
+  border: none;
+  padding: 14px;
+  margin: 0 15px;
+  border-radius: 8px;
+  font-size: 16px;
+  text-align: left;
   cursor: pointer;
   transition: 0.2s;
 }
 
-.sidebar li:hover {
-  color: #00ffff;
+.side-btn:hover {
+  background: #3f627d;
 }
 
-/* Contenido principal */
-.main-content {
-  margin-left: 0;
+/* Contenido */
+.contenido {
+  flex: 1;
+  margin-top: 80px;
   padding: 20px;
+  width: 100%;
+  overflow-y: auto;
 }
 
-@media(min-width: 768px) {
-  .main-content {
-    margin-left: 220px; /* deja espacio si sidebar abierto en desktop */
-  }
+.bienvenida {
+  font-size: 30px;
+  text-align: center;
+  margin-top: 40px;
 }
 
-/* AddGame */
-input, button {
-  margin: 5px;
-  padding: 8px;
-  border-radius: 5px;
-  border: none;
-  font-size: 1rem;
-}
-
+/* Formularios */
 input {
-  width: 150px;
+  background: #1e2a3d;
+  color: #e0e6ed;
+  border: 1px solid #324a5e;
+  padding: 10px;
+  border-radius: 8px;
+  width: 100%;
 }
 
 button {
-  background-color: #00ffff;
-  color: #121226;
   cursor: pointer;
-  transition: 0.3s;
-}
-
-button:hover {
-  background-color: #00bbbb;
-}
-
-/* Lista de juegos */
-.juegos-list {
-  list-style: none;
-  padding: 0;
-}
-
-.juego-item {
-  background-color: #2a2a3f;
-  margin: 10px 0;
-  padding: 10px;
-  border-radius: 10px;
-}
-
-.juego-item img {
-  margin-top: 5px;
-  border-radius: 5px;
 }
