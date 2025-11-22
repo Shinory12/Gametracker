@@ -1,15 +1,11 @@
-const mongoose = require('mongoose');
-const Schema = mongoose.Schema;
+import mongoose from "mongoose";
 
-const ReviewSchema = new Schema({
-  juegoId: { type: Schema.Types.ObjectId, ref: 'Game', required: true },
-  puntuacion: { type: Number, min: 1, max: 5, required: true },
-  textoReseña: String,
-  horasJugadas: { type: Number, default: 0 },
-  dificultad: { type: String, enum: ['Fácil', 'Normal', 'Difícil'] },
-  recomendaria: { type: Boolean, default: false },
-  fechaCreacion: { type: Date, default: Date.now },
-  fechaActualizacion: Date
+const reviewSchema = new mongoose.Schema({
+  juegoId: { type: mongoose.Schema.Types.ObjectId, ref: "Juego", required: true },
+  usuario: { type: String, required: true },
+  comentario: { type: String, required: true },
+  calificacion: { type: Number, min: 1, max: 5, required: true },
+  fecha: { type: Date, default: Date.now }
 });
 
-module.exports = mongoose.model('Review', ReviewSchema);
+export default mongoose.model("Review", reviewSchema);

@@ -1,16 +1,11 @@
-const mongoose = require('mongoose');
-const Schema = mongoose.Schema;
+import mongoose from "mongoose";
 
-const GameSchema = new Schema({
-  titulo: { type: String, required: true },
+const gameSchema = new mongoose.Schema({
+  nombre: { type: String, required: true },
   genero: String,
   plataforma: String,
-  añoLanzamiento: Number,
-  desarrollador: String,
-  imagenPortada: String,
-  descripcion: String,
-  completado: { type: Boolean, default: false },
-  fechaCreacion: { type: Date, default: Date.now }
+  anio: Number,
+  imagen: String
 });
 
-module.exports = mongoose.model('Game', GameSchema);
+export default mongoose.model("Game", gameSchema);

@@ -1,34 +1,27 @@
-const express = require('express');
+import express from "express";
+import Review from "../models/Review.js";
+
 const router = express.Router();
-const Review = require('../models/Review');
 
-router.get('/', async (req, res) => {
-  const reviews = await Review.find().sort({ fechaCreacion: -1 });
-  res.json(reviews);
+// Obtener reseñas por juego
+router.get("/:juegoId", async (req, res) => {
+  try {
+    const reviews = await Review.find({ juegoId: req.params.juegoId }).sort({ fecha: -1 });
+    res.json(reviews);
+  } catch (error) {
+    res.status(500).json({ error: "Error al obtener reseñas" });
+  }
 });
 
-router.get('/juego/:juegoId', async (req, res) => {
-  const reviews = await Review.find({ juegoId: req.params.juegoId });
-  res.json(reviews);
+// Crear reseña nueva
+router.post("/", async (req, res) => {
+  try {
+    const nueva = new Review(req.body);
+    await nueva.save();
+    res.json({ mensaje: "Reseña creada", review: nueva });
+  } catch (error) {
+    res.status(500).json({ error: "Error al crear reseña" });
+  }
 });
 
-router.post('/', async (req, res) => {
-  const r = new Review(req.body);
-  const saved = await r.save();
-  res.status(201).json(saved);
-});
-
-router.put('/:id', async (req, res) => {
-  req.body.fechaActualizacion = Date.now();
-  const updated = await Review.findByIdAndUpdate(req.params.id, req.body, { new: true });
-  if (!updated) return res.status(404).json({ message: 'Reseña no encontrada' });
-  res.json(updated);
-});
-
-router.delete('/:id', async (req, res) => {
-  const deleted = await Review.findByIdAndDelete(req.params.id);
-  if (!deleted) return res.status(404).json({ message: 'Reseña no encontrada' });
-  res.json({ message: 'Reseña eliminada' });
-});
-
-module.exports = router;
+export default router;

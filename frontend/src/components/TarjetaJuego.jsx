@@ -100,3 +100,4 @@ export default function TarjetaJuego({ juego, onUpdate, onDelete }) {
     </div>
   )
 }
+

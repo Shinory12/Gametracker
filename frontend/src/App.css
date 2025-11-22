@@ -1,81 +1,112 @@
-body {
-  background-color: #0f0f0f;
-  color: white;
-  font-family: 'Segoe UI', sans-serif;
+/* Reset básico */
+body, html, #root {
   margin: 0;
   padding: 0;
-  text-align: center;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #1e1e2f;
+  color: #eee;
 }
 
-.titulo {
-  font-size: 2.5rem;
-  color: cyan;
-  text-shadow: 0 0 10px cyan;
-  margin-top: 20px;
-}
-
-.formulario {
+/* Barra superior */
+.navbar {
   display: flex;
-  justify-content: center;
-  gap: 10px;
-  margin: 20px auto;
-  flex-wrap: wrap;
+  align-items: center;
+  background-color: #121226;
+  padding: 10px 20px;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.title {
+  margin-left: 20px;
+  font-size: 1.8rem;
+  color: #00ffff;
+}
+
+.menu-icon {
+  width: 30px;
+  height: 30px;
+  cursor: pointer;
+}
+
+/* Sidebar menú */
+.sidebar {
+  position: fixed;
+  top: 50px;
+  left: 0;
+  width: 200px;
+  height: 100%;
+  background-color: #1a1a2e;
+  padding: 20px;
+  box-shadow: 2px 0 5px rgba(0,0,0,0.5);
+}
+
+.sidebar ul {
+  list-style: none;
+  padding: 0;
+}
+
+.sidebar li {
+  padding: 10px 0;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.sidebar li:hover {
+  color: #00ffff;
+}
+
+/* Contenido principal */
+.main-content {
+  margin-left: 0;
+  padding: 20px;
+}
+
+@media(min-width: 768px) {
+  .main-content {
+    margin-left: 220px; /* deja espacio si sidebar abierto en desktop */
+  }
+}
+
+/* AddGame */
+input, button {
+  margin: 5px;
+  padding: 8px;
+  border-radius: 5px;
+  border: none;
+  font-size: 1rem;
 }
 
 input {
-  background-color: #1a1a1a;
-  border: 1px solid #333;
-  color: white;
-  padding: 10px;
-  border-radius: 8px;
   width: 150px;
 }
 
 button {
-  background-color: cyan;
-  color: black;
-  font-weight: bold;
-  border: none;
-  padding: 10px 15px;
-  border-radius: 8px;
+  background-color: #00ffff;
+  color: #121226;
   cursor: pointer;
   transition: 0.3s;
 }
 
 button:hover {
-  background-color: #00ffffa0;
+  background-color: #00bbbb;
 }
 
-.contenedor-juegos {
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-  gap: 25px;
-  margin-top: 30px;
+/* Lista de juegos */
+.juegos-list {
+  list-style: none;
+  padding: 0;
 }
 
-.tarjeta {
-  background-color: #1a1a1a;
-  border-radius: 12px;
-  padding: 15px;
-  width: 180px;
-  box-shadow: 0 0 10px #00ffff40;
-}
-
-.tarjeta img {
-  width: 100%;
-  height: 200px;
-  object-fit: cover;
+.juego-item {
+  background-color: #2a2a3f;
+  margin: 10px 0;
+  padding: 10px;
   border-radius: 10px;
 }
 
-.sin-imagen {
-  background-color: #333;
-  color: gray;
-  width: 100%;
-  height: 200px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 10px;
+.juego-item img {
+  margin-top: 5px;
+  border-radius: 5px;
 }
